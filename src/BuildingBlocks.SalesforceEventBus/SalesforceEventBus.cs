@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CometD.NetCore.Bayeux.Client;
 using CometD.NetCore.Salesforce;
 using CometD.NetCore.Salesforce.ForceClient;
+using KDCLLC.BuildingBlocks.Abstractions;
 using Microsoft.Extensions.Logging;
 
 namespace KDCLLC.BuildingBlocks.SalesforceEventBus

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace KDCLLC.BuildingBlocks
+namespace KDCLLC.BuildingBlocks.Abstractions
 {
     /// <summary>
     /// Container for the Salesforce Messages

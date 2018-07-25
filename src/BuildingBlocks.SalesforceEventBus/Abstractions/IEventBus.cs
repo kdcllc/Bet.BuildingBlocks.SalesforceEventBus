@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace KDCLLC.BuildingBlocks
+namespace KDCLLC.BuildingBlocks.Abstractions
 {
     /// <summary>
     /// The <see cref="IEventBus"/> provides an abstraction to event bus infrastructure.

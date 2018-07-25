@@ -1,4 +1,4 @@
-﻿namespace KDCLLC.BuildingBlocks
+﻿namespace KDCLLC.BuildingBlocks.Abstractions
 {
     /// <summary>
     /// Salesforce Platform Event.

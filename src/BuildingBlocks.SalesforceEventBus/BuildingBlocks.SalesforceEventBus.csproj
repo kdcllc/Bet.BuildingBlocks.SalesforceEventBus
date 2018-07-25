@@ -13,6 +13,8 @@
 		<PackageId>KDCLLC.BuildingBlocks.SalesforceEventBus</PackageId>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<Description>Event Bus for Salesforce Platform events.</Description>
+		<Copyright>King David Consulting LLC</Copyright>
   </PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -28,7 +30,7 @@
 
 	
 	<ItemGroup>
-    <PackageReference Include="CometD.NetCore.Salesforce" Version="1.0.1" />
+    <PackageReference Include="CometD.NetCore.Salesforce" Version="1.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
