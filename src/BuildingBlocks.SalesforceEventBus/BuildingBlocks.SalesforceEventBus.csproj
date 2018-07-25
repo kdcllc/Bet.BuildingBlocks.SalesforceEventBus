@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>KDCLLC.BuildingBlocks.SalesforceEventBus</AssemblyName>
+    <RootNamespace>KDCLLC.BuildingBlocks.SalesforceEventBus</RootNamespace>
+    <PackageLicenseUrl>https://github.com/kdcllc/KDCLLC.BuildingBlocks.SalesforceEventBus/blob/master/LICENSE</PackageLicenseUrl>
+		<PackageProjectUrl>https://github.com/kdcllc/KDCLLC.BuildingBlocks.SalesforceEventBus</PackageProjectUrl>
+		<PackageIconUrl>https://raw.githubusercontent.com/kdcllc/KDCLLC.BuildingBlocks.SalesforceEventBus/master/img/logo64x64.png</PackageIconUrl>
+		<RepositoryUrl>https://github.com/kdcllc/KDCLLC.BuildingBlocks.SalesforceEventBus.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>salesforce, cometd, bayeux, event, platform event, building blocks</PackageTags>
+		<PackageId>KDCLLC.BuildingBlocks.SalesforceEventBus</PackageId>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+		<DebugType>full</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DebugType>pdbonly</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
+
+	
+	<ItemGroup>
+    <PackageReference Include="CometD.NetCore.Salesforce" Version="1.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+</Project>
