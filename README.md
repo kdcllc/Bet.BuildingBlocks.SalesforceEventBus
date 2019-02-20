@@ -6,10 +6,19 @@ This repo contains the CometD .NET Core implementation of the Java ported code.
 - [CometD.NetCore2.Salesforce project](https://github.com/kdcllc/CometD.NetCore.Salesforce) - provides with implementation of this library.
 
 
-## Nuget Packages
-``` 
-PM> Install-Package KDCLLC.BuildingBlocks.SalesforceEventBus 
+## Nuget
+
+```cmd
+    PM> Install-Package Bet.BuildingBlocks.SalesforceEventBus
 ```
+
+
+## Previous 1.0.2 Version of the package
+
+```cmd
+    PM> Install-Package KDCLLC.BuildingBlocks.SalesforceEventBus 
+```
+
 ## Enable with your project
 ```
     services.AddSalesforceEventBus()

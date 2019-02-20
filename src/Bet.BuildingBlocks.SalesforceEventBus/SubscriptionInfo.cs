@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KDCLLC.BuildingBlocks.SalesforceEventBus
+namespace Bet.BuildingBlocks.SalesforceEventBus
 {
     internal class SubscriptionInfo
     {

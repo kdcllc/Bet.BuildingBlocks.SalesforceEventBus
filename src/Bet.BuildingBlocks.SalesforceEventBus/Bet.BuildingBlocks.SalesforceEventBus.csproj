@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Bet.BuildingBlocks.SalesforceEventBus</AssemblyName>
+    <RootNamespace>Bet.BuildingBlocks.SalesforceEventBus</RootNamespace>
+  </PropertyGroup>
+
+	<ItemGroup>
+    <PackageReference Include="CometD.NetCore.Salesforce"/>
+    <PackageReference Include="Newtonsoft.Json"/>
+  </ItemGroup>
+
+</Project>

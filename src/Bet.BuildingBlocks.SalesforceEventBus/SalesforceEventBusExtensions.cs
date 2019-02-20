@@ -1,5 +1,5 @@
-﻿using KDCLLC.BuildingBlocks.Abstractions;
-using KDCLLC.BuildingBlocks.SalesforceEventBus;
+﻿using Bet.BuildingBlocks.Abstractions;
+using Bet.BuildingBlocks.SalesforceEventBus;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

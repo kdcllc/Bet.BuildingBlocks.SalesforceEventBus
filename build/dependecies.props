@@ -1,0 +1,12 @@
+<Project>
+
+
+    <ItemGroup Label="Shared Libraries">
+  	    <PackageReference Update="CometD.NetCore.Salesforce" Version="1.0.2" />
+        <PackageReference Update="Newtonsoft.Json" Version="11.0.2" />
+    </ItemGroup>
+
+    <ItemGroup Label="SourceLink">
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05" PrivateAssets="All" />
+    </ItemGroup>
+</Project>

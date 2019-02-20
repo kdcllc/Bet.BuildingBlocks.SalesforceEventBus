@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildingBlocks.SalesforceEventBus", "src\BuildingBlocks.SalesforceEventBus\BuildingBlocks.SalesforceEventBus.csproj", "{061903F8-AF7E-4409-8238-FD1911FCB30C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bet.BuildingBlocks.SalesforceEventBus", "src\Bet.BuildingBlocks.SalesforceEventBus\Bet.BuildingBlocks.SalesforceEventBus.csproj", "{061903F8-AF7E-4409-8238-FD1911FCB30C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C23A2989-D1B5-4C31-9FD7-8519051B1DCD}"
 	ProjectSection(SolutionItems) = preProject

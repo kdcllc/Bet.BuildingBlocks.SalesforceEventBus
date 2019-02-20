@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using CometD.NetCore.Bayeux.Client;
 using CometD.NetCore.Salesforce;
 using CometD.NetCore.Salesforce.ForceClient;
-using KDCLLC.BuildingBlocks.Abstractions;
+using Bet.BuildingBlocks.Abstractions;
 using Microsoft.Extensions.Logging;
 
-namespace KDCLLC.BuildingBlocks.SalesforceEventBus
+namespace Bet.BuildingBlocks.SalesforceEventBus
 {
     /// <summary>
     /// The <see cref="SalesforceEventBus"/> provides a way to register events for salesforce CometD communication bus.
@@ -46,9 +46,9 @@ namespace KDCLLC.BuildingBlocks.SalesforceEventBus
             #endregion
 
             _messageListerners = messageListeners;
-                       
+
             _streamingClient.Reconnect += _streamingClient_Reconnect;
-            
+
             _streamingClient.Handshake();
         }
 
@@ -65,7 +65,7 @@ namespace KDCLLC.BuildingBlocks.SalesforceEventBus
                     var topicName = GetEventOrTopicName(sub.Key.Name);
 
                     var messageListener = sub.Value as IMessageListener;
-                    
+
                     _streamingClient.SubscribeTopic(topicName, messageListener, sub.Key.ReplayId);
                 }
             }
@@ -84,7 +84,7 @@ namespace KDCLLC.BuildingBlocks.SalesforceEventBus
             {
                 throw new ArgumentNullException(nameof(eventMessage));
             }
-            
+
             var @event = (eventMessage is PlatformEvent) ?
                 eventMessage as PlatformEvent :
                 throw new ArgumentException($"{nameof(eventMessage)} must be type of {nameof(PlatformEvent)}");
