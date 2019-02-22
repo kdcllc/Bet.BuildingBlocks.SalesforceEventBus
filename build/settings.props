@@ -1,8 +1,7 @@
 <Project>
-
   <PropertyGroup Label="Basic Settings">
     <IsPackable>true</IsPackable>
-    <VersionPrefix>2.0.0-pre</VersionPrefix>
+    <VersionPrefix>2.1.0-pre</VersionPrefix>
     <LangVersion>latest</LangVersion>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
@@ -10,7 +9,6 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Nuget Package Settings">
-		<PackageId>Bet.BuildingBlocks.SalesforceEventBus</PackageId>
 		<Description>Event Bus for Salesforce Platform events.</Description>
 		<PackageProjectUrl>https://github.com/kdcllc/Bet.BuildingBlocks.SalesforceEventBus</PackageProjectUrl>
 	  <RepositoryUrl>https://github.com/kdcllc/CometD.NetCore.Salesforce.git</RepositoryUrl>

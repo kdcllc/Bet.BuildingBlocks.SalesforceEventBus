@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>netcoreapp2.2</TargetFrameworks>
+    <IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Bet.AspNetCore" Version="1.0.3" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.2.0"/>
+		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.0"/>
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0"/>
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="2.2.0"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="appsettings*.json" CopyToOutputDirectory="PreserveNewest" />
+		<Content Include="hostsettings*.json" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="appsettings.Development.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Bet.BuildingBlocks.SalesforceEventBus\Bet.BuildingBlocks.SalesforceEventBus.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="appsettings.Development.json">
+	    <DependentUpon>appsettings.json</DependentUpon>
+	  </Content>
+	</ItemGroup>
+
+</Project>

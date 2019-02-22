@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2042
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28606.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bet.BuildingBlocks.SalesforceEventBus", "src\Bet.BuildingBlocks.SalesforceEventBus\Bet.BuildingBlocks.SalesforceEventBus.csproj", "{061903F8-AF7E-4409-8238-FD1911FCB30C}"
 EndProject
@@ -10,10 +10,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
+		clean.sh = clean.sh
 		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{1BB5536E-FABD-45E0-889C-432354DB903E}"
+	ProjectSection(SolutionItems) = preProject
+		build\dependecies.props = build\dependecies.props
+		build\settings.props = build\settings.props
+		build\sources.props = build\sources.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C3567549-7A82-4CA1-89E1-207C60AB42BA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "src\TestApp\TestApp.csproj", "{785B498B-1324-4F05-B039-EA29DFFD1C7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,9 +38,17 @@ Global
 		{061903F8-AF7E-4409-8238-FD1911FCB30C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{061903F8-AF7E-4409-8238-FD1911FCB30C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{061903F8-AF7E-4409-8238-FD1911FCB30C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{785B498B-1324-4F05-B039-EA29DFFD1C7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{785B498B-1324-4F05-B039-EA29DFFD1C7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{785B498B-1324-4F05-B039-EA29DFFD1C7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{785B498B-1324-4F05-B039-EA29DFFD1C7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{061903F8-AF7E-4409-8238-FD1911FCB30C} = {C3567549-7A82-4CA1-89E1-207C60AB42BA}
+		{785B498B-1324-4F05-B039-EA29DFFD1C7A} = {C3567549-7A82-4CA1-89E1-207C60AB42BA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {49C0D78B-B863-4F0A-BCAF-B1E3CDE81B21}
