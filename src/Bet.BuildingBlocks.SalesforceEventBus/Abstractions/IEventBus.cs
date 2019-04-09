@@ -14,29 +14,28 @@ namespace Bet.BuildingBlocks.Abstractions
         /// <typeparam name="T"> T will be an IMessageListener for salesforce.</typeparam>
         /// <param name="eventMessage"></param>
         /// <returns></returns>
-        Task Subscribe<T>(BusEvent eventMessage) where T : class;
+        Task Subscribe<T>(BusEvent<T> eventMessage) where T : class;
 
         /// <summary>
         /// Unsubscribe from an event.
         /// </summary>
         /// <typeparam name="T"> T will be an IMessageListener for salesforce.</typeparam>
-        /// <param name="eventMessage">The <see cref="BusEvent"/> to unsubscribe from <see cref="IEventBus"/>.</param>
+        /// <param name="eventMessage">The <see cref="BusEvent{T}"/> to unsubscribe from <see cref="IEventBus"/>.</param>
         /// <returns><see cref="Task"/> void.</returns>
-        Task Unsubscribe<T>(BusEvent eventMessage) where T : class;
-
-
-        /// <summary>
-        /// Publish an event to the <see cref="IEventBus"/>.
-        /// </summary>
-        /// <param name="message">The <see cref="BusEvent"/> to publish to <see cref="IEventBus"/>.</param>
-        /// <returns><see cref="Task"/> void.</returns>
-        Task Publish(BusEvent message);
+        Task Unsubscribe<T>(BusEvent<T> eventMessage) where T : class;
 
         /// <summary>
         /// Publish an event to the <see cref="IEventBus"/>.
         /// </summary>
-        /// <param name="message">The <see cref="BusEvent"/> to publish to <see cref="IEventBus"/>.</param>
+        /// <param name="message">The <see cref="BusEvent{T}"/> to publish to <see cref="IEventBus"/>.</param>
         /// <returns><see cref="Task"/> void.</returns>
-        Task Publish(object message);
+        Task Publish<T>(BusEvent<T> message);
+
+        /// <summary>
+        /// Publish an event to the <see cref="IEventBus"/>.
+        /// </summary>
+        /// <param name="message">The <see cref="BusEvent{T}"/> to publish to <see cref="IEventBus"/>.</param>
+        /// <returns><see cref="Task"/> void.</returns>
+        Task Publish<T>(object message);
     }
 }

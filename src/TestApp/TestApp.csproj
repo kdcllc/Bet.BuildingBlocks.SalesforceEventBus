@@ -4,14 +4,23 @@
     <OutputType>Exe</OutputType>
     <TargetFrameworks>netcoreapp2.2</TargetFrameworks>
     <IsPackable>false</IsPackable>
-	</PropertyGroup>
+    <NoWarn>$(NoWarn);IDE0025</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="NetCoreForce.ModelGenerator" Version="2.5.0" />
+  </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Bet.AspNetCore" Version="1.0.3" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.2.0"/>
-		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.0"/>
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0"/>
-		<PackageReference Include="Microsoft.Extensions.Hosting" Version="2.2.0"/>
+    <PackageReference Include="Bet.Extensions.Options" Version="1.1.19" />
+    <PackageReference Include="Bet.Extensions.Hosting" Version="1.1.19" />
+    <PackageReference Include="Bet.Extensions.AzureVault" Version="1.1.19" />
+    <PackageReference Include="Bet.Extensions.Logging" Version="1.1.19" />
+
+		<PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="2.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -31,6 +40,10 @@
 	  <Content Update="appsettings.Development.json">
 	    <DependentUpon>appsettings.json</DependentUpon>
 	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Models\Salesforce\" />
 	</ItemGroup>
 
 </Project>

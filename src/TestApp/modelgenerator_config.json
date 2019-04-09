@@ -1,0 +1,28 @@
+{
+  "AuthInfo": {
+    "clientId": "",
+    "clientSecret": "",
+    "username": "",
+    "password": "",
+    "apiVersion": "v41.0",
+    "authorizationEndpoint": "https://login.salesforce.com/services/oauth2/authorize",
+    "tokenRequestEndpoint": "https://login.salesforce.com/services/oauth2/token",
+    "tokenRevocationEndpoint": "https://login.salesforce.com/services/oauth2/revoke"
+  },
+  "OutputDirectory": "Models/Salesforce",
+  "Objects": [
+    "Contact",
+    "Account",
+    "User",
+    "UserRole",
+    "Profile",
+    "UserLicense",
+    "DandBCompany",
+    "TestEvent__c"
+  ],
+  "ClassPrefix": null,
+  "ClassSuffix": null,
+  "ClassNamespace": "TestApp.Models.Salesforce",
+  "IncludeCustom": true,
+  "IncludeReferences": true
+}

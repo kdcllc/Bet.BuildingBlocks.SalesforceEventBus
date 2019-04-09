@@ -7,18 +7,20 @@ using CometD.NetCore.Salesforce;
 using CometD.NetCore.Salesforce.ForceClient;
 using Bet.BuildingBlocks.Abstractions;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using CometD.NetCore.Salesforce.Resilience;
 
 namespace Bet.BuildingBlocks.SalesforceEventBus
 {
     /// <summary>
-    /// The <see cref="SalesforceEventBus"/> provides a way to register events for salesforce CometD communication bus.
+    /// The <see cref="SalesforceEventBus"/> provides a way to register events for Salesforce CometD communication bus.
     /// </summary>
     public class SalesforceEventBus : IEventBus
     {
         private readonly IStreamingClient _streamingClient;
         private readonly ILogger<SalesforceEventBus> _logger;
-        private readonly IForceClientProxy _forceClient;
-        private readonly SalesforceConfiguration _config;
+        private readonly IResilientForceClient _forceClient;
+        private readonly SalesforceConfiguration _options;
         private readonly IEnumerable<IMessageListener> _messageListerners;
 
         private readonly ConcurrentDictionary<SubscriptionInfo, object> _subscriptions =
@@ -31,19 +33,21 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
         /// <param name="logger">The instance of <see cref="ILogger{SalesforceEventBus}"/>.</param>
         /// <param name="forceClient">The instance of <see cref="ForceClientProxy"/> to provide a publish functionality to the bus.</param>
         /// <param name="messageListeners"></param>
-        /// <param name="configuration"></param>
-        public SalesforceEventBus(IStreamingClient streamingClient,
+        /// <param name="options"></param>
+        public SalesforceEventBus(
+            IStreamingClient streamingClient,
             ILogger<SalesforceEventBus> logger,
-            IForceClientProxy forceClient,
+            IResilientForceClient forceClient,
             IEnumerable<IMessageListener> messageListeners,
-            SalesforceConfiguration configuration)
+            IOptions<SalesforceConfiguration> options)
         {
-            #region ArgumentNullException
             _streamingClient = streamingClient ?? throw new ArgumentNullException(nameof(streamingClient));
+
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
             _forceClient = forceClient ?? throw new ArgumentNullException(nameof(forceClient));
-            _config = configuration ?? throw new ArgumentNullException(nameof(configuration));
-            #endregion
+
+            _options = options.Value ?? throw new ArgumentNullException(nameof(options));
 
             _messageListerners = messageListeners;
 
@@ -52,7 +56,9 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
             _streamingClient.Handshake();
         }
 
-        private void _streamingClient_Reconnect(object sender, bool isReconnected)
+        private void _streamingClient_Reconnect(
+            object sender,
+            bool isReconnected)
         {
             // possible to add logic to count x times reconnect and stop, at this time
             // the retry will go indefinitely.
@@ -69,13 +75,11 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
                     _streamingClient.SubscribeTopic(topicName, messageListener, sub.Key.ReplayId);
                 }
             }
-
         }
 
         ///<inheritdoc/>
-        public Task Subscribe<T>(BusEvent eventMessage) where T : class
+        public Task Subscribe<T>(BusEvent<T> eventMessage) where T : class
         {
-            #region Dispose and ArgumentException
             if (_isDisposed)
             {
                 throw new ObjectDisposedException("Cannot subscribe when disposed");
@@ -85,9 +89,9 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
                 throw new ArgumentNullException(nameof(eventMessage));
             }
 
-            var @event = (eventMessage is PlatformEvent) ?
-                eventMessage as PlatformEvent :
-                throw new ArgumentException($"{nameof(eventMessage)} must be type of {nameof(PlatformEvent)}");
+            var @event = (eventMessage is PlatformEvent<T>) ?
+                eventMessage as PlatformEvent<T> :
+                throw new ArgumentException($"{nameof(eventMessage)} must be type of {nameof(PlatformEvent<T>)}");
 
             if (!typeof(IMessageListener).IsAssignableFrom(typeof(T)))
             {
@@ -99,7 +103,6 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
             {
                 throw new ArgumentException($"EventName of {nameof(eventMessage)} cannot be empty");
             }
-            #endregion
 
             var key = new SubscriptionInfo(eventName, @event.ReplayId, typeof(T));
             if (_subscriptions.ContainsKey(key))
@@ -129,9 +132,8 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
         }
 
         ///<inheritdoc/>
-        public Task Unsubscribe<T>(BusEvent eventMessage) where T : class
+        public Task Unsubscribe<T>(BusEvent<T> eventMessage) where T : class
         {
-            #region Dispose and ArgumentNullException
             if (_isDisposed)
             {
                 throw new ObjectDisposedException("Cannot unsubscribe when disposed");
@@ -141,9 +143,9 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
                 throw new ArgumentNullException(nameof(eventMessage));
             }
 
-            var @event = (eventMessage is PlatformEvent) ?
-              eventMessage as PlatformEvent :
-              throw new ArgumentException($"{nameof(eventMessage)} must be type of {nameof(PlatformEvent)}");
+            var @event = (eventMessage is PlatformEvent<T>) ?
+              eventMessage as PlatformEvent<T> :
+              throw new ArgumentException($"{nameof(eventMessage)} must be type of {nameof(PlatformEvent<T>)}");
 
             if (!typeof(IMessageListener).IsAssignableFrom(typeof(T)))
             {
@@ -155,7 +157,6 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
             {
                 throw new ArgumentException($"EventName of {nameof(eventMessage)} cannot be empty");
             }
-            #endregion
 
             var key = new SubscriptionInfo(eventName, @event.ReplayId, typeof(T));
             if (!_subscriptions.ContainsKey(key))
@@ -176,31 +177,28 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
         }
 
         ///<inheritdoc/>
-        public Task Publish(BusEvent eventMessage)
+        public Task Publish<T>(BusEvent<T> message)
         {
-            #region Dispose and ArgumentException
             if (_isDisposed)
             {
                 throw new ObjectDisposedException("Cannot unsubscribe when disposed");
             }
-            if (eventMessage == null)
+            if (message == null)
             {
-                throw new ArgumentNullException(nameof(eventMessage));
+                throw new ArgumentNullException(nameof(message));
             }
-            if (string.IsNullOrWhiteSpace(eventMessage.Name))
+            if (string.IsNullOrWhiteSpace(message.Name))
             {
-                throw new ArgumentException(nameof(eventMessage));
+                throw new ArgumentException(nameof(message));
             }
-            #endregion
 
-            // publish event back to salesforce
-            return _forceClient.CreateRecord(eventMessage.Name, eventMessage);
+            // publish event back to Salesforce
+            return _forceClient.CreateRecordAsync<T>(message.Name, message.Data);
         }
 
         ///<inheritdoc/>
-        public Task Publish(object message)
+        public Task Publish<T>(object message)
         {
-            #region Dispose and ArgumentException
             if (_isDisposed)
             {
                 throw new ObjectDisposedException("Cannot unsubscribe when disposed");
@@ -210,11 +208,9 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
                 throw new ArgumentNullException(nameof(message));
             }
 
-            var @event = (message is BusEvent) ? message as BusEvent : throw new ArgumentException(nameof(message));
-            #endregion
+            var @event = (message is BusEvent<T>) ? message as BusEvent<T> : throw new ArgumentException(nameof(message));
 
-            return _forceClient.CreateRecord(@event.Name, @event.Name);
-
+            return _forceClient.CreateRecordAsync<T>(@event.Name, @event.Data);
         }
 
         private T GetListerner<T>()
@@ -233,10 +229,8 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
 
         private string GetEventOrTopicName(string eventName)
         {
-            return $"{_config.EventOrTopicUri}/{eventName}";
+            return $"{_options.EventOrTopicUri}/{eventName}";
         }
-
-        #region Dispose
 
         private bool _isDisposed = false;
 
@@ -259,7 +253,5 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
         {
             Dispose(false);
         }
-
-        #endregion
     }
 }

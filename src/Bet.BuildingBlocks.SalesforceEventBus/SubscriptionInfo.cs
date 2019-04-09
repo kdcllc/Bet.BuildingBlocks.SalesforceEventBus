@@ -18,7 +18,7 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
         #region Equals
         public bool Equals(SubscriptionInfo other)
         {
-            if (ReferenceEquals(null, other))
+            if (other is null)
             {
                 return false;
             }
@@ -33,7 +33,7 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
+            if (obj is null)
             {
                 return false;
             }
@@ -60,7 +60,6 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
 
             return hash;
         }
-
 
         #endregion
     }
