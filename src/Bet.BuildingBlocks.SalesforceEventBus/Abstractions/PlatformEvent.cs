@@ -3,7 +3,7 @@
     /// <summary>
     /// Salesforce Platform Event.
     /// </summary>
-    public class PlatformEvent : BusEvent
+    public class PlatformEvent<T> : BusEvent<T>
     {
         /// <summary>
         /// Specifies Replay Id for the Salesforce.

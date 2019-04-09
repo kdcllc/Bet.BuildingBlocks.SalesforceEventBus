@@ -16,7 +16,7 @@ This repo implementation of Event Bus for Salesforce platform events with a samp
 In the S`tartup.cs` or generic host please add the following registration:
 
 ```csharp
-    services.AddSalesforceEventBus()
+    services.AddSalesforceEventBus(context.Configuration);
 ```
 
 ## TestApp
@@ -34,6 +34,15 @@ In order for this app code to log into SalesForce, please specify the following 
     "AccessToken": ""
   }
 ````
+### Creating `Salesforce` classes
+
+If the following is not set the tool authentication won't work correctly.
+
+> Connected App --> Manage -- Edit Policies --> Select Relax IP restrictions for active devices.
+
+```bash
+    dotnet modelgenerator generate --client-id  --client-secret  
+````
 
 ## Previous 1.0.2 Version of the package was under a different name
 
@@ -45,7 +54,7 @@ In order for this app code to log into SalesForce, please specify the following 
 In the startup.cs or generic host please add the following registration:
 
 ```csharp
-    services.AddSalesforceEventBus()
+   services.AddSalesforceEventBus(context.Configuration);
 ```
 
 ## Configure Saleforce Developer instance

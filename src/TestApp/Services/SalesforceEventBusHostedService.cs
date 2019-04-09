@@ -5,6 +5,7 @@ using Bet.BuildingBlocks.Abstractions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using TestApp.EventBus.Messages;
+using Microsoft.Extensions.Options;
 
 namespace TestApp.Services
 {
@@ -21,12 +22,12 @@ namespace TestApp.Services
         public SalesforceEventBusHostedService(
             ILogger<SalesforceEventBusHostedService> logger,
             IApplicationLifetime appLifetime,
-            SalesforceConfiguration options,
+            IOptions<SalesforceConfiguration> options,
             IEventBus eventBus)
         {
             _logger = logger;
             _appLifetime = appLifetime;
-            _options = options;
+            _options = options.Value;
             _eventBus = eventBus;
         }
 
@@ -39,7 +40,11 @@ namespace TestApp.Services
             _logger.LogInformation("StartAsync has been called.");
 
             await _eventBus.Subscribe<CustomMessageListener>(
-               new PlatformEvent() { Name = _options.CustomEvent, ReplayId= _options.ReplayId });
+               new PlatformEvent<CustomMessageListener>()
+               {
+                   Name = _options.CustomEvent,
+                   ReplayId = _options.ReplayId
+               });
 
            //return Task.CompletedTask;
         }
@@ -49,7 +54,11 @@ namespace TestApp.Services
             _logger.LogInformation("StopAsync has been called.");
 
             await _eventBus.Unsubscribe<CustomMessageListener>(
-                new PlatformEvent() { Name = _options.CustomEvent, ReplayId=_options.ReplayId});
+                new PlatformEvent<CustomMessageListener>()
+                {
+                    Name = _options.CustomEvent,
+                    ReplayId = _options.ReplayId
+                });
         }
 
         private void OnStarted()
