@@ -1,10 +1,48 @@
 <Project>
+    <PropertyGroup>
+        <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <BetCommonVersion>2.0</BetCommonVersion>
+        <ExtensionsVersion>2.2</ExtensionsVersion>
+    </PropertyGroup>
+
+   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1' Or '$(TargetFramework)' == 'netstandard2.0'">
+        <ExtensionsVersion>2.1</ExtensionsVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.2'">
+      <ExtensionsVersion>2.2</ExtensionsVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0' Or '$(TargetFramework)' == 'netstandard2.1'">
+        <ExtensionsVersion>3.0.0</ExtensionsVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Update="Microsoft.Extensions.Configuration.CommandLine" Version="$(ExtensionsVersion)" />
+        <PackageReference Update="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="$(ExtensionsVersion)" />
+        <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="$(ExtensionsVersion)" />
+        <PackageReference Update="Microsoft.Extensions.Hosting" Version="$(ExtensionsVersion)" />
+    </ItemGroup>
+
+    <ItemGroup Label="Bet">
+        <PackageReference Update="Bet.Extensions.Options" Version="$(BetCommonVersion)" />
+        <PackageReference Update="Bet.Extensions.Hosting" Version="$(BetCommonVersion)" />
+        <PackageReference Update="Bet.Extensions.AzureVault" Version="$(BetCommonVersion)" />
+        <PackageReference Update="Bet.Extensions.Logging" Version="$(BetCommonVersion)" />
+    </ItemGroup>
+
     <ItemGroup Label="Shared Libraries">
-  	    <PackageReference Update="CometD.NetCore.Salesforce" Version="2.1.0" />
-        <PackageReference Update="Newtonsoft.Json" Version="12.0.1" />
+        <PackageReference Update="CometD.NetCore.Salesforce" Version="2.2.1" />
+    </ItemGroup>
+
+    <ItemGroup Label="Analyzers">
+      <PackageReference Include="Bet.CodeAnalyzers" Version="1.0.7" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup Label="SourceLink">
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19554-01" PrivateAssets="All" />
     </ItemGroup>
 </Project>

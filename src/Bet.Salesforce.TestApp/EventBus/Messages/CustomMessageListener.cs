@@ -1,16 +1,21 @@
-﻿using Bet.BuildingBlocks.Abstractions;
+﻿using System;
+
+using Bet.BuildingBlocks.Abstractions;
+
 using CometD.NetCore.Bayeux;
 using CometD.NetCore.Bayeux.Client;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using System;
-using TestApp.Models.Salesforce;
 
-namespace TestApp.EventBus.Messages
+using Newtonsoft.Json;
+
+using Bet.Salesforce.TestApp.Models.Salesforce;
+
+namespace Bet.Salesforce.TestApp.EventBus.Messages
 {
     /// <summary>
-    /// The <see cref="CustomMessageListener"/> implements <see cref="IMessageListener"/>
+    /// The <see cref="CustomMessageListener"/> implements <see cref="IMessageListener"/>.
     /// </summary>
     public class CustomMessageListener : IMessageListener
     {
@@ -18,7 +23,7 @@ namespace TestApp.EventBus.Messages
         private readonly IServiceProvider _serviceProvider;
 
         /// <summary>
-        /// Constructor for <see cref="CustomMessageListener"/>.
+        /// Initializes a new instance of the <see cref="CustomMessageListener"/> class.
         /// </summary>
         /// <param name="logger">Instance of the <see cref="ILogger{CustomMessageListener}"/>.</param>
         /// <param name="serviceProvider"></param>
@@ -31,7 +36,7 @@ namespace TestApp.EventBus.Messages
         }
 
         /// <summary>
-        /// Receives Salesforce message from Platform Event
+        /// Receives Salesforce message from Platform Event.
         /// </summary>
         /// <param name="channel"></param>
         /// <param name="message"></param>

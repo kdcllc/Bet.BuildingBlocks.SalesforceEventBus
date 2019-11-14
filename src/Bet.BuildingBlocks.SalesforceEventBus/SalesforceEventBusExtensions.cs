@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
     public static class SalesforceEventBusExtensions
     {
         /// <summary>
-        /// Registers <see cref="SalesforceEventBus"/> and its dependencies from <see cref="StreamingClientExtensions"/>
+        /// Registers <see cref="SalesforceEventBus"/> and its dependencies from <see cref="StreamingClientExtensions"/>.
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configuration"></param>

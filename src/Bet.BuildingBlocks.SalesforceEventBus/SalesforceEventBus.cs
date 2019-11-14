@@ -2,13 +2,16 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
+using Bet.BuildingBlocks.Abstractions;
+
 using CometD.NetCore.Bayeux.Client;
 using CometD.NetCore.Salesforce;
 using CometD.NetCore.Salesforce.ForceClient;
-using Bet.BuildingBlocks.Abstractions;
+using CometD.NetCore.Salesforce.Resilience;
+
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using CometD.NetCore.Salesforce.Resilience;
 
 namespace Bet.BuildingBlocks.SalesforceEventBus
 {
@@ -27,7 +30,7 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
             new ConcurrentDictionary<SubscriptionInfo, object>();
 
         /// <summary>
-        /// Constructor <see cref="SalesforceEventBus"/>
+        /// Initializes a new instance of the <see cref="SalesforceEventBus"/> class.
         /// </summary>
         /// <param name="streamingClient">The instance of <see cref="IStreamingClient"/> with connection to salesforce.</param>
         /// <param name="logger">The instance of <see cref="ILogger{SalesforceEventBus}"/>.</param>
@@ -51,39 +54,28 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
 
             _messageListerners = messageListeners;
 
-            _streamingClient.Reconnect += _streamingClient_Reconnect;
+            _streamingClient.Reconnect += StreamingClient_Reconnect;
 
             _streamingClient.Handshake();
         }
 
-        private void _streamingClient_Reconnect(
-            object sender,
-            bool isReconnected)
+        /// <summary>
+        /// Finalizes an instance of the <see cref="SalesforceEventBus"/> class.
+        /// </summary>
+        ~SalesforceEventBus()
         {
-            // possible to add logic to count x times reconnect and stop, at this time
-            // the retry will go indefinitely.
-            if (isReconnected)
-            {
-                _streamingClient.Handshake();
-
-                foreach (var sub in _subscriptions)
-                {
-                    var topicName = GetEventOrTopicName(sub.Key.Name);
-
-                    var messageListener = sub.Value as IMessageListener;
-
-                    _streamingClient.SubscribeTopic(topicName, messageListener, sub.Key.ReplayId);
-                }
-            }
+            Dispose(false);
         }
 
-        ///<inheritdoc/>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <inheritdoc/>
         public Task Subscribe<T>(BusEvent<T> eventMessage) where T : class
         {
-            if (_isDisposed)
-            {
-                throw new ObjectDisposedException("Cannot subscribe when disposed");
-            }
             if (eventMessage == null)
             {
                 throw new ArgumentNullException(nameof(eventMessage));
@@ -105,6 +97,7 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
             }
 
             var key = new SubscriptionInfo(eventName, @event.ReplayId, typeof(T));
+
             if (_subscriptions.ContainsKey(key))
             {
                 // only allow a single subscription per (event + type)
@@ -124,20 +117,16 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
 
             _subscriptions.AddOrUpdate(key, handler, (existingKey, existingHandler) => existingHandler);
 
-            _streamingClient.SubscribeTopic(topicName, handler as IMessageListener,@event.ReplayId);
+            _streamingClient.SubscribeTopic(topicName, handler as IMessageListener, @event.ReplayId);
 
             _logger.LogDebug($"{topicName} is subscribed with ReplayId: {@event.ReplayId}");
 
             return Task.CompletedTask;
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc/>
         public Task Unsubscribe<T>(BusEvent<T> eventMessage) where T : class
         {
-            if (_isDisposed)
-            {
-                throw new ObjectDisposedException("Cannot unsubscribe when disposed");
-            }
             if (eventMessage == null)
             {
                 throw new ArgumentNullException(nameof(eventMessage));
@@ -176,17 +165,14 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
             return Task.CompletedTask;
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc/>
         public Task Publish<T>(BusEvent<T> message)
         {
-            if (_isDisposed)
-            {
-                throw new ObjectDisposedException("Cannot unsubscribe when disposed");
-            }
             if (message == null)
             {
                 throw new ArgumentNullException(nameof(message));
             }
+
             if (string.IsNullOrWhiteSpace(message.Name))
             {
                 throw new ArgumentException(nameof(message));
@@ -196,13 +182,9 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
             return _forceClient.CreateRecordAsync<T>(message.Name, message.Data);
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc/>
         public Task Publish<T>(object message)
         {
-            if (_isDisposed)
-            {
-                throw new ObjectDisposedException("Cannot unsubscribe when disposed");
-            }
             if (message == null)
             {
                 throw new ArgumentNullException(nameof(message));
@@ -211,6 +193,14 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
             var @event = (message is BusEvent<T>) ? message as BusEvent<T> : throw new ArgumentException(nameof(message));
 
             return _forceClient.CreateRecordAsync<T>(@event.Name, @event.Data);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _streamingClient?.Dispose();
+            }
         }
 
         private T GetListerner<T>()
@@ -232,26 +222,23 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
             return $"{_options.EventOrTopicUri}/{eventName}";
         }
 
-        private bool _isDisposed = false;
-
-        public void Dispose()
+        private void StreamingClient_Reconnect(object sender, bool isReconnected)
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing && !_isDisposed)
+            // possible to add logic to count x times reconnect and stop, at this time
+            // the retry will go indefinitely.
+            if (isReconnected)
             {
-                _streamingClient?.Dispose();
-                _isDisposed = true;
-            }
-        }
+                _streamingClient.Handshake();
 
-        ~SalesforceEventBus()
-        {
-            Dispose(false);
+                foreach (var sub in _subscriptions)
+                {
+                    var topicName = GetEventOrTopicName(sub.Key.Name);
+
+                    var messageListener = sub.Value as IMessageListener;
+
+                    _streamingClient.SubscribeTopic(topicName, messageListener, sub.Key.ReplayId);
+                }
+            }
         }
     }
 }

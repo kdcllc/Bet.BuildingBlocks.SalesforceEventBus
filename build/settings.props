@@ -3,9 +3,16 @@
     <IsPackable>true</IsPackable>
     <VersionPrefix>2.1.0-pre</VersionPrefix>
     <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
     <NoWarn>$(NoWarn);CS1591;IDE1006</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Ownership Settings">
+    <Company>King David Consulting LLC</Company>
+    <Authors>kdcllc</Authors>
+    <Copyright>King David Consulting LLC</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Label="Nuget Package Settings">

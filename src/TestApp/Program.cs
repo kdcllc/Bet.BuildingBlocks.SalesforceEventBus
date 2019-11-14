@@ -1,17 +1,15 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using CometD.NetCore.Bayeux.Client;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using TestApp.EventBus.Messages;
-using TestApp.Services;
 
 namespace TestApp
 {
 #pragma warning disable RCS1102 // Make class static.
-    public class Program
+    internal sealed class Program
 #pragma warning restore RCS1102 // Make class static.
     {
         public static async Task Main(string[] args)
@@ -31,7 +29,7 @@ namespace TestApp
                          $"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json",
                          optional: true);
 
-                     configBuilder.AddAzureKeyVault(hostingEnviromentName:hostContext.HostingEnvironment.EnvironmentName);
+                     configBuilder.AddAzureKeyVault(hostingEnviromentName: hostContext.HostingEnvironment.EnvironmentName);
 
                      configBuilder.AddEnvironmentVariables(prefix: "TESTAPP_");
                      configBuilder.AddCommandLine(args);
@@ -42,13 +40,12 @@ namespace TestApp
                  })
                  .ConfigureServices((context, services) =>
                  {
-                     services.AddHostedService<SalesforceEventBusHostedService>();
-
-                     services.AddTransient<IMessageListener, CustomMessageListener>();
+                     services.AddCustomerSalesforceEventBus();
 
                      // Conjure up a RequestServices
                      services.AddTransient<IServiceProviderFactory<IServiceCollection>, DefaultServiceProviderFactory>();
 
+                     // TODO refactor this...
                      services.AddSalesforceEventBus(context.Configuration);
                  })
                  .ConfigureLogging((hostContext, configLogging) =>
