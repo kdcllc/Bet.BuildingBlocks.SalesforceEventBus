@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFrameworks>netcoreapp2.2</TargetFrameworks>
     <IsPackable>false</IsPackable>
-    <NoWarn>$(NoWarn);IDE0025</NoWarn>
+    <NoWarn>$(NoWarn);</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +20,7 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" />
-		
+
 	</ItemGroup>
 
 	<ItemGroup>
@@ -33,7 +33,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Bet.BuildingBlocks.SalesforceEventBus\Bet.BuildingBlocks.SalesforceEventBus.csproj" />
 	  <ProjectReference Include="..\Bet.Salesforce.TestApp\Bet.Salesforce.TestApp.csproj" />
 	</ItemGroup>
 

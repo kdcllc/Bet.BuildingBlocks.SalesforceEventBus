@@ -8,9 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace TestApp
 {
-#pragma warning disable RCS1102 // Make class static.
     internal sealed class Program
-#pragma warning restore RCS1102 // Make class static.
     {
         public static async Task Main(string[] args)
         {
@@ -34,19 +32,21 @@ namespace TestApp
                      configBuilder.AddEnvironmentVariables(prefix: "TESTAPP_");
                      configBuilder.AddCommandLine(args);
 
-                     // print out the environment
-                     var config = configBuilder.Build();
-                     config.DebugConfigurations();
+                     if (hostContext.HostingEnvironment.IsDevelopment())
+                     {
+                         // print out the environment
+                         var config = configBuilder.Build();
+                         config.DebugConfigurations();
+                     }
                  })
                  .ConfigureServices((context, services) =>
                  {
+                     services.AddSalesforceEventBus(context.Configuration);
+
                      services.AddCustomerSalesforceEventBus();
 
                      // Conjure up a RequestServices
                      services.AddTransient<IServiceProviderFactory<IServiceCollection>, DefaultServiceProviderFactory>();
-
-                     // TODO refactor this...
-                     services.AddSalesforceEventBus(context.Configuration);
                  })
                  .ConfigureLogging((hostContext, configLogging) =>
                  {

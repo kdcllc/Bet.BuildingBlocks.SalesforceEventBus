@@ -16,12 +16,12 @@ using Microsoft.Extensions.Options;
 namespace Bet.BuildingBlocks.SalesforceEventBus
 {
     /// <summary>
-    /// The <see cref="SalesforceEventBus"/> provides a way to register events for Salesforce CometD communication bus.
+    /// The <see cref="EventBus"/> provides a way to register events for Salesforce CometD communication bus.
     /// </summary>
-    public class SalesforceEventBus : IEventBus
+    public class EventBus : IEventBus
     {
         private readonly IStreamingClient _streamingClient;
-        private readonly ILogger<SalesforceEventBus> _logger;
+        private readonly ILogger<EventBus> _logger;
         private readonly IResilientForceClient _forceClient;
         private readonly SalesforceConfiguration _options;
         private readonly IEnumerable<IMessageListener> _messageListerners;
@@ -30,16 +30,16 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
             new ConcurrentDictionary<SubscriptionInfo, object>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SalesforceEventBus"/> class.
+        /// Initializes a new instance of the <see cref="EventBus"/> class.
         /// </summary>
         /// <param name="streamingClient">The instance of <see cref="IStreamingClient"/> with connection to salesforce.</param>
         /// <param name="logger">The instance of <see cref="ILogger{SalesforceEventBus}"/>.</param>
         /// <param name="forceClient">The instance of <see cref="ForceClientProxy"/> to provide a publish functionality to the bus.</param>
         /// <param name="messageListeners"></param>
         /// <param name="options"></param>
-        public SalesforceEventBus(
+        public EventBus(
             IStreamingClient streamingClient,
-            ILogger<SalesforceEventBus> logger,
+            ILogger<EventBus> logger,
             IResilientForceClient forceClient,
             IEnumerable<IMessageListener> messageListeners,
             IOptions<SalesforceConfiguration> options)
@@ -60,9 +60,9 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
         }
 
         /// <summary>
-        /// Finalizes an instance of the <see cref="SalesforceEventBus"/> class.
+        /// Finalizes an instance of the <see cref="EventBus"/> class.
         /// </summary>
-        ~SalesforceEventBus()
+        ~EventBus()
         {
             Dispose(false);
         }

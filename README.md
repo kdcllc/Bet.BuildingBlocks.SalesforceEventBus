@@ -1,65 +1,19 @@
-# CometD for Salesforce Platform events
-[![Build status](https://ci.appveyor.com/api/projects/status/95p5gcuv67v7vq7q?svg=true)](https://ci.appveyor.com/project/kdcllc/kdcllc-buildingblocks-salesforceeventbus)
+# Bet.BuildingBlocks.SalesforceEventBus
 
-This repo implementation of Event Bus for Salesforce platform events with a sample app.
+[![Build status](https://ci.appveyor.com/api/projects/status/95p5gcuv67v7vq7q?svg=true)](https://ci.appveyor.com/project/kdcllc/kdcllc-buildingblocks-salesforceeventbus)
+[![NuGet](https://img.shields.io/nuget/v/Bet.BuildingBlocks.SalesforceEventBus.svg)](https://www.nuget.org/packages?q=Bet.BuildingBlocks.SalesforceEventBus)
+
+This repo is the implementation of Event Bus for Salesforce platform events with a sample app.
+It demonstrates how to interact with CometD for Salesforce Platform events.
+
+- [Bet.BuildingBlocks.SalesforceEventBus](./src/Bet.BuildingBlocks.SalesforceEventBus/README.md) - the reusable library.
+- [Bet.Salesforce.TestApp](./src/Bet.Salesforce.TestApp/README.md) - the project that contains `IEventBus` sample implementation.
+- [TestApp](./src/TestApp/README.md) - DotNetCore 2.2 worker implementation of `Bet.Salesforce.TestApp`
+- [TestAppWorker](./src/TestAppWorker/README.md) - DotNetCore 3.0 worker implementation of `Bet.Salesforce.TestApp` with Docker support.
+
+## Referenced Projects
 
 - [CometD2.NetCore](https://github.com/kdcllc/CometD.NetCore) - [CometD.org](CometD.org) implementation, supports replay id.
 - [CometD.NetCore2.Salesforce project](https://github.com/kdcllc/CometD.NetCore.Salesforce) - provides with implementation of this library.
 
-## Install 
-
-```cmd
-    PM> Install-Package Bet.BuildingBlocks.SalesforceEventBus
-```
-
-## Usage
-In the S`tartup.cs` or generic host please add the following registration:
-
-```csharp
-    services.AddSalesforceEventBus(context.Configuration);
-```
-
-## TestApp
-This sample application demonstrates usage of the library in light of Salesfore Platform event.
-Please setup the required values in Azure Key Vault or User Secrets or appsettings.json.
-Use dotnet cli `salesforce` tool to generate access and refresh tokens. 
-Install latest dotnet cli `salesforce` tool by `dotnet tool install --global salesforce`. Read more on how to use [here](https://github.com/kdcllc/CometD.NetCore.Salesforce#salesforce-dotnet-cli-usage)
-In order for this app code to log into SalesForce, please specify the following setup:
-
-```json
-  "Salesforce": {
-    "ClientId": "",
-    "ClientSecret": "",
-    "RefreshToken": "",
-    "AccessToken": ""
-  }
-````
-### Creating `Salesforce` classes
-
-If the following is not set the tool authentication won't work correctly.
-
-> Connected App --> Manage -- Edit Policies --> Select Relax IP restrictions for active devices.
-
-```bash
-    dotnet modelgenerator generate --client-id  --client-secret  
-````
-
-## Previous 1.0.2 Version of the package was under a different name
-
-```cmd
-    PM> Install-Package KDCLLC.BuildingBlocks.SalesforceEventBus 
-```
-
-## Usage
-In the startup.cs or generic host please add the following registration:
-
-```csharp
-   services.AddSalesforceEventBus(context.Configuration);
-```
-
-## Configure Saleforce Developer instance
-[Salesforce Platform Events - Video](https://www.youtube.com/watch?v=L6OWyCfQD6U)
-1. Sing up for development sandbox with Saleforce: [https://developer.salesforce.com/signup](https://developer.salesforce.com/signup).
-2. Create Connected App in Salesforce.
-3. Create a Platform Event.
 
