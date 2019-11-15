@@ -22,7 +22,7 @@
   ],
   "ClassPrefix": null,
   "ClassSuffix": null,
-  "ClassNamespace": "TestApp.Models.Salesforce",
+  "ClassNamespace": "Bet.Salesforce.TestApp.Models.Salesforce",
   "IncludeCustom": true,
   "IncludeReferences": true
 }

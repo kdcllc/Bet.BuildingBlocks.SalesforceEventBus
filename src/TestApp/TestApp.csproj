@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFrameworks>netcoreapp2.2</TargetFrameworks>
     <IsPackable>false</IsPackable>
-    <NoWarn>$(NoWarn);IDE0025</NoWarn>
+    <NoWarn>$(NoWarn);</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,15 +12,15 @@
   </ItemGroup>
 
 	<ItemGroup>
-    <PackageReference Include="Bet.Extensions.Options" Version="1.1.19" />
-    <PackageReference Include="Bet.Extensions.Hosting" Version="1.1.19" />
-    <PackageReference Include="Bet.Extensions.AzureVault" Version="1.1.19" />
-    <PackageReference Include="Bet.Extensions.Logging" Version="1.1.19" />
+    <PackageReference Include="Bet.Extensions.Options" />
+    <PackageReference Include="Bet.Extensions.Hosting" />
+    <PackageReference Include="Bet.Extensions.AzureVault" />
+    <PackageReference Include="Bet.Extensions.Logging" />
 
-		<PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.2.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
-		<PackageReference Include="Microsoft.Extensions.Hosting" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" />
+
 	</ItemGroup>
 
 	<ItemGroup>
@@ -33,17 +33,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Bet.BuildingBlocks.SalesforceEventBus\Bet.BuildingBlocks.SalesforceEventBus.csproj" />
+	  <ProjectReference Include="..\Bet.Salesforce.TestApp\Bet.Salesforce.TestApp.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Content Update="appsettings.Development.json">
 	    <DependentUpon>appsettings.json</DependentUpon>
 	  </Content>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Models\Salesforce\" />
 	</ItemGroup>
 
 </Project>

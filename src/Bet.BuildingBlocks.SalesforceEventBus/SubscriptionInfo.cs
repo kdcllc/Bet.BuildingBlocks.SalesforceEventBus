@@ -10,12 +10,13 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
             ReplayId = replayId;
             HandlerType = handlerType;
         }
+
         public string Name { get; }
 
         public int ReplayId { get; set; }
+
         public object HandlerType { get; }
 
-        #region Equals
         public bool Equals(SubscriptionInfo other)
         {
             if (other is null)
@@ -28,7 +29,7 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
                 return true;
             }
 
-            return other.Name == Name &&  other.ReplayId == ReplayId && other.HandlerType == HandlerType;
+            return other.Name == Name && other.ReplayId == ReplayId && other.HandlerType == HandlerType;
         }
 
         public override bool Equals(object obj)
@@ -60,7 +61,5 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
 
             return hash;
         }
-
-        #endregion
     }
 }

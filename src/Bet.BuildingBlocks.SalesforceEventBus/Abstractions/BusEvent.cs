@@ -3,7 +3,7 @@
 namespace Bet.BuildingBlocks.Abstractions
 {
     /// <summary>
-    /// Container for the Salesforce Messages
+    /// Container for the Salesforce Messages.
     /// </summary>
     public class BusEvent<T>
     {

@@ -1,18 +1,14 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using CometD.NetCore.Bayeux.Client;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using TestApp.EventBus.Messages;
-using TestApp.Services;
 
 namespace TestApp
 {
-#pragma warning disable RCS1102 // Make class static.
-    public class Program
-#pragma warning restore RCS1102 // Make class static.
+    internal sealed class Program
     {
         public static async Task Main(string[] args)
         {
@@ -31,25 +27,26 @@ namespace TestApp
                          $"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json",
                          optional: true);
 
-                     configBuilder.AddAzureKeyVault(hostingEnviromentName:hostContext.HostingEnvironment.EnvironmentName);
+                     configBuilder.AddAzureKeyVault(hostingEnviromentName: hostContext.HostingEnvironment.EnvironmentName);
 
                      configBuilder.AddEnvironmentVariables(prefix: "TESTAPP_");
                      configBuilder.AddCommandLine(args);
 
-                     // print out the environment
-                     var config = configBuilder.Build();
-                     config.DebugConfigurations();
+                     if (hostContext.HostingEnvironment.IsDevelopment())
+                     {
+                         // print out the environment
+                         var config = configBuilder.Build();
+                         config.DebugConfigurations();
+                     }
                  })
                  .ConfigureServices((context, services) =>
                  {
-                     services.AddHostedService<SalesforceEventBusHostedService>();
+                     services.AddSalesforceEventBus(context.Configuration);
 
-                     services.AddTransient<IMessageListener, CustomMessageListener>();
+                     services.AddCustomerSalesforceEventBus();
 
                      // Conjure up a RequestServices
                      services.AddTransient<IServiceProviderFactory<IServiceCollection>, DefaultServiceProviderFactory>();
-
-                     services.AddSalesforceEventBus(context.Configuration);
                  })
                  .ConfigureLogging((hostContext, configLogging) =>
                  {

@@ -1,27 +1,38 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CometD.NetCore.Salesforce;
+
 using Bet.BuildingBlocks.Abstractions;
+using Bet.Salesforce.TestApp.EventBus.Messages;
+
+using CometD.NetCore.Salesforce;
+
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using TestApp.EventBus.Messages;
 using Microsoft.Extensions.Options;
 
-namespace TestApp.Services
+namespace Bet.Salesforce.TestApp.Services
 {
     /// <summary>
-    /// Provides with LifetimeEventsHostedService
+    /// Provides with LifetimeEventsHostedService.
     /// </summary>
-    internal class SalesforceEventBusHostedService : IHostedService
+    public class SalesforceEventBusHostedService : IHostedService
     {
         private readonly ILogger _logger;
+#if NETSTANDARD2_0
         private readonly IApplicationLifetime _appLifetime;
+#elif NETSTANDARD2_1
+        private readonly IHostApplicationLifetime _appLifetime;
+#endif
         private readonly SalesforceConfiguration _options;
         private readonly IEventBus _eventBus;
 
         public SalesforceEventBusHostedService(
             ILogger<SalesforceEventBusHostedService> logger,
+#if NETSTANDARD2_0
             IApplicationLifetime appLifetime,
+#elif NETSTANDARD2_1
+            IHostApplicationLifetime appLifetime,
+#endif
             IOptions<SalesforceConfiguration> options,
             IEventBus eventBus)
         {
@@ -45,8 +56,6 @@ namespace TestApp.Services
                    Name = _options.CustomEvent,
                    ReplayId = _options.ReplayId
                });
-
-           //return Task.CompletedTask;
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
