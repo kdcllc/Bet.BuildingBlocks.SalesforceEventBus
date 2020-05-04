@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup Label="Basic Settings">
     <IsPackable>true</IsPackable>
-    <VersionPrefix>2.1.0-pre</VersionPrefix>
+    <VersionPrefix>3.0.0-preview1</VersionPrefix>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -22,7 +22,8 @@
     <RepositoryType>git</RepositoryType>
     <PackageLicense>https://github.com/kdcllc/Bet.BuildingBlocks.SalesforceEventBus/blob/master/LICENSE</PackageLicense>
 		<RepositoryUrl>https://github.com/kdcllc/Bet.BuildingBlocks.SalesforceEventBus.git</RepositoryUrl>
- 		<PackageIconUrl>https://raw.githubusercontent.com/kdcllc/Bet.BuildingBlocks.SalesforceEventBus/master/img/logo64x64.png</PackageIconUrl>
+    <!-- https://docs.microsoft.com/en-us/nuget/reference/errors-and-warnings/nu5048 -->
+    <PackageIcon>icon.png</PackageIcon>
     <PackageTags>aspnetcore,dottet,salesforce, cometd, bayeux,salesforce, cometd, bayeux, event, platform event, building blocks</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
@@ -32,5 +33,9 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+
+    <!-- https://github.com/kdcllc/Bet.AspNetCore/issues/103 -->
+    <DebugType>Embedded</DebugType>
+    <EmbedAllSources>True</EmbedAllSources>
   </PropertyGroup>
 </Project>

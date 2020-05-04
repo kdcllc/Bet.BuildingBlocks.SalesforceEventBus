@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <IsPackable>false</IsPackable>
     <NoWarn>$(NoWarn);</NoWarn>
 
-    <UserSecretsId>dotnet-TestAppWorker-FE93E44C-8E04-45DD-86D9-A444C107A324</UserSecretsId>
+    <UserSecretsId>fe93e44c-8e04-45dd-86d9-a444c107a324</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>

@@ -7,7 +7,6 @@ using Bet.BuildingBlocks.Abstractions;
 
 using CometD.NetCore.Bayeux.Client;
 using CometD.NetCore.Salesforce;
-using CometD.NetCore.Salesforce.ForceClient;
 using CometD.NetCore.Salesforce.Resilience;
 
 using Microsoft.Extensions.Logging;
@@ -34,8 +33,8 @@ namespace Bet.BuildingBlocks.SalesforceEventBus
         /// </summary>
         /// <param name="streamingClient">The instance of <see cref="IStreamingClient"/> with connection to salesforce.</param>
         /// <param name="logger">The instance of <see cref="ILogger{SalesforceEventBus}"/>.</param>
-        /// <param name="forceClient">The instance of <see cref="ForceClientProxy"/> to provide a publish functionality to the bus.</param>
-        /// <param name="messageListeners"></param>
+        /// <param name="forceClient">The Resilient Force Client.</param>
+        /// <param name="messageListeners">The message listeners.</param>
         /// <param name="options"></param>
         public EventBus(
             IStreamingClient streamingClient,
