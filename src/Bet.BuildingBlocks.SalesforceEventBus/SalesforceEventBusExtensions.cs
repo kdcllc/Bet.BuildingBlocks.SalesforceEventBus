@@ -1,8 +1,6 @@
 ﻿using Bet.BuildingBlocks.Abstractions;
 using Bet.BuildingBlocks.SalesforceEventBus;
 
-using Microsoft.Extensions.Configuration;
-
 namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
@@ -14,15 +12,13 @@ namespace Microsoft.Extensions.DependencyInjection
         /// Registers <see cref="EventBus"/> and its dependencies from <see cref="StreamingClientExtensions"/>.
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="configuration"></param>
         /// <param name="sectionName"></param>
         /// <returns></returns>
         public static IServiceCollection AddSalesforceEventBus(
             this IServiceCollection services,
-            IConfiguration configuration,
             string sectionName = "Salesforce")
         {
-            services.AddResilientStreamingClient(configuration, sectionName);
+            services.AddResilientStreamingClient(sectionName);
             services.AddSingleton<IEventBus, EventBus>();
 
             return services;

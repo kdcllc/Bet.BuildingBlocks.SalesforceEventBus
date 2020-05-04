@@ -41,7 +41,7 @@ namespace TestApp
                  })
                  .ConfigureServices((context, services) =>
                  {
-                     services.AddSalesforceEventBus(context.Configuration);
+                     services.AddSalesforceEventBus();
 
                      services.AddCustomerSalesforceEventBus();
 

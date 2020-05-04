@@ -28,7 +28,7 @@ namespace TestAppWorker
             })
             .ConfigureServices((hostContext, services) =>
             {
-                services.AddSalesforceEventBus(hostContext.Configuration);
+                services.AddSalesforceEventBus();
                 services.AddCustomerSalesforceEventBus();
             })
             .ConfigureLogging((hostContext, configLogging) =>

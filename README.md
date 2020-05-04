@@ -2,6 +2,8 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/95p5gcuv67v7vq7q?svg=true)](https://ci.appveyor.com/project/kdcllc/kdcllc-buildingblocks-salesforceeventbus)
 [![NuGet](https://img.shields.io/nuget/v/Bet.BuildingBlocks.SalesforceEventBus.svg)](https://www.nuget.org/packages?q=Bet.BuildingBlocks.SalesforceEventBus)
+![Nuget](https://img.shields.io/nuget/dt/Bet.BuildingBlocks.SalesforceEventBus.)
+[![feedz.io](https://img.shields.io/badge/endpoint.svg?url=https://f.feedz.io/kdcllc/kdcllc/shield/Bet.BuildingBlocks.SalesforceEventBus./latest)](https://f.feedz.io/kdcllc/kdcllc/packages/Bet.BuildingBlocks.SalesforceEventBus./latest/download)
 
 This repo is the implementation of Event Bus for Salesforce platform events with a sample app.
 It demonstrates how to interact with CometD for Salesforce Platform events.
