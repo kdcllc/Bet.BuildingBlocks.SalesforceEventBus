@@ -18,21 +18,13 @@ namespace Bet.Salesforce.TestApp.Services
     public class SalesforceEventBusHostedService : IHostedService
     {
         private readonly ILogger _logger;
-#if NETSTANDARD2_0
-        private readonly IApplicationLifetime _appLifetime;
-#elif NETSTANDARD2_1
         private readonly IHostApplicationLifetime _appLifetime;
-#endif
         private readonly SalesforceConfiguration _options;
         private readonly IEventBus _eventBus;
 
         public SalesforceEventBusHostedService(
             ILogger<SalesforceEventBusHostedService> logger,
-#if NETSTANDARD2_0
-            IApplicationLifetime appLifetime,
-#elif NETSTANDARD2_1
             IHostApplicationLifetime appLifetime,
-#endif
             IOptions<SalesforceConfiguration> options,
             IEventBus eventBus)
         {
