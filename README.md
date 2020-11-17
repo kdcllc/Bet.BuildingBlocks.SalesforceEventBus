@@ -1,9 +1,10 @@
 # Bet.BuildingBlocks.SalesforceEventBus
 
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/kdcllc/kdcllc-buildingblocks-salesforceeventbus/master/LICENSE)
 [![Build status](https://ci.appveyor.com/api/projects/status/95p5gcuv67v7vq7q?svg=true)](https://ci.appveyor.com/project/kdcllc/kdcllc-buildingblocks-salesforceeventbus)
 [![NuGet](https://img.shields.io/nuget/v/Bet.BuildingBlocks.SalesforceEventBus.svg)](https://www.nuget.org/packages?q=Bet.BuildingBlocks.SalesforceEventBus)
-![Nuget](https://img.shields.io/nuget/dt/Bet.BuildingBlocks.SalesforceEventBus.)
-[![feedz.io](https://img.shields.io/badge/endpoint.svg?url=https://f.feedz.io/kdcllc/kdcllc/shield/Bet.BuildingBlocks.SalesforceEventBus./latest)](https://f.feedz.io/kdcllc/kdcllc/packages/Bet.BuildingBlocks.SalesforceEventBus./latest/download)
+![Nuget](https://img.shields.io/nuget/dt/Bet.BuildingBlocks.SalesforceEventBus)
+[![feedz.io](https://img.shields.io/badge/endpoint.svg?url=https://f.feedz.io/kdcllc/kdcllc/shield/Bet.BuildingBlocks.SalesforceEventBus/latest)](https://f.feedz.io/kdcllc/kdcllc/packages/Bet.BuildingBlocks.SalesforceEventBus./latest/download)
 
 This repo is the implementation of Event Bus for Salesforce platform events with a sample app.
 It demonstrates how to interact with CometD for Salesforce Platform events.
@@ -17,5 +18,3 @@ It demonstrates how to interact with CometD for Salesforce Platform events.
 
 - [CometD2.NetCore](https://github.com/kdcllc/CometD.NetCore) - [CometD.org](CometD.org) implementation, supports replay id.
 - [CometD.NetCore2.Salesforce project](https://github.com/kdcllc/CometD.NetCore.Salesforce) - provides with implementation of this library.
-
-
